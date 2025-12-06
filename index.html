@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arc Academy: Master The Economic OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header id="header">
+        <div class="logo-container" onclick="showSection('home')">
+            <img src="logo.png" alt="Arc Logo" class="logo-img" onerror="this.style.display='none'">
+            <span class="logo-text">Arc Academy</span>
+        </div>
+        <nav>
+            <a href="#" data-section="home" class="nav-item active">Home</a>
+            <a href="#" data-section="lessons" class="nav-item">Lessons</a>
+            <a href="#" data-section="flashcards" class="nav-item">Glossary</a>
+            <a href="#" data-section="library" class="nav-item">Documentation</a>
+            <a href="#" data-section="certificate" class="nav-item">Certificate</a>
+        </nav>
+        <div class="header-streak">
+            <i class="fas fa-fire streak-icon-small"></i>
+            <span id="current-streak-header">0 Days</span>
+        </div>
+    </header>
+
+    <main id="app-container">
+
+        <!-- HOME SECTION -->
+        <section id="home" class="content-section active">
+            <div class="hero-section section-card">
+                <h1>Master The Economic OS for the Internet</h1>
+                <p>Learn Arc's revolutionary blockchain infrastructure, cryptographic protocols, and decentralized economic mechanisms. Build the future of peer-to-peer commerce with institutional-grade technology.</p>
+                <button class="cta-button" onclick="showSection('lessons')">Start Learning Now</button>
+            </div>
+
+            <div class="progress-stats section-card">
+                <h2>Your Arc Education Journey</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h3>Overall Progress</h3>
+                        <div class="progress-bar-container">
+                            <div id="overall-progress-bar" class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <span id="progress-percent">0% Completed (0/6 Lessons Passed)</span>
+                    </div>
+                    <div class="stat-box">
+                        <h3>Learning Streak</h3>
+                        <i class="fas fa-fire streak-icon"></i>
+                        <span id="current-streak">0 Days</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-game-container section-card">
+                <h2>Interactive Demo: Arc Transaction Simulator</h2>
+                <p>Experience Arc's peer-to-peer transaction processing with real-time settlement verification and cryptographic proof generation.</p>
+                <button class="learn-more-button cta-button" onclick="openArcSimulator()">Launch Transaction Simulator</button>
+            </div>
+        </section>
+
+        <!-- LESSONS SECTION -->
+        <section id="lessons" class="content-section hidden">
+            <h1>Arc Academy Curriculum</h1>
+            <div id="lessons-list" class="grid-container"></div>
+        </section>
+
+        <!-- LESSON VIEWER -->
+        <section id="lesson-viewer" class="content-section hidden">
+            <button class="back-button" onclick="showSection('lessons')"><i class="fas fa-arrow-left"></i> Back to Lessons</button>
+            <h2 id="lesson-title"></h2>
+            
+            <div class="lesson-content-wrapper section-card">
+                <div class="lesson-progress-bar-container">
+                    <span class="progress-label">Read Progress: <span id="read-progress-percent">0%</span></span>
+                    <div id="lesson-read-progress" class="progress-bar lesson-bar-small" style="width: 0%;"></div>
+                </div>
+                
+                <div id="lesson-content-display"></div>
+
+                <div id="lesson-navigation-footer" class="hidden">
+                    <button id="next-lesson-btn" class="cta-button">Go to Next Lesson <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div id="quiz-area" class="quiz-container hidden section-card">
+                <h3>Quiz Time!</h3>
+                <p>Answer each question step-by-step. You need 4 out of 5 correct to pass and advance.</p>
+                
+                <div id="quiz-progress-info">
+                    <span id="quiz-step-indicator">Question 1 of 5</span>
+                </div>
+
+                <div id="quiz-question-display"></div>
+
+                <div id="quiz-navigation">
+                    <button id="quiz-next-btn" class="cta-button">Next Question</button>
+                </div>
+
+                <div id="quiz-results" class="hidden">
+                    <h3>Quiz Results</h3>
+                    <p id="quiz-score"></p>
+                    <div id="quiz-review"></div>
+                    <div id="quiz-hints"></div>
+                    <div class="quiz-result-actions">
+                        <button id="retry-quiz-btn" class="cta-button hidden">Retry Quiz</button>
+                        <button id="finish-quiz-btn" class="cta-button hidden">Back to Lessons</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FLASHCARDS SECTION -->
+        <section id="flashcards" class="content-section hidden">
+            <h1>Arc Technology Terminology & Concepts</h1>
+            <p>Master Arc's core vocabulary. Click any card to reveal definitions.</p>
+            <div id="flashcard-grid" class="grid-container"></div>
+        </section>
+
+        <!-- LIBRARY SECTION -->
+        <section id="library" class="content-section hidden">
+            <h1>Arc Technical Documentation</h1>
+            <p>Deep dive into architecture, systems, and advanced features.</p>
+            <div id="library-content"></div>
+        </section>
+        
+        <!-- CERTIFICATE SECTION -->
+        <section id="certificate" class="content-section hidden">
+            <h1>Your Arc Certification</h1>
+            <div id="certificate-status" class="section-card">
+                <p id="certificate-message">Complete all 6 lessons and quizzes to earn your Arc Academy Certification!</p>
+                <img id="certificate-display" src="certificate.png" alt="Arc Academy Certificate" class="certificate-img hidden" onerror="this.style.display='none'">
+                <button id="download-certificate" class="cta-button hidden">Download Certificate</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ARC TRANSACTION SIMULATOR MODAL -->
+    <div id="arc-simulator-modal" class="modal hidden">
+        <div class="modal-content section-card trading-simulator">
+            <span class="modal-close" onclick="closeArcSimulator()">&times;</span>
+            <h2>Arc Transaction Simulator</h2>
+            <p>Send peer-to-peer transactions with real-time cryptographic verification and settlement confirmation</p>
+            
+            <div class="simulator-container">
+                <!-- Transaction Setup -->
+                <div id="transaction-setup" class="setup-phase">
+                    <div class="setup-grid">
+                        <div class="setup-input">
+                            <label>Sender Address</label>
+                            <input type="text" id="sender-address" value="0x742d35Cc6634C0532925a3b844Bc9e7595f42..." readonly>
+                        </div>
+                        <div class="setup-input">
+                            <label>Recipient Address</label>
+                            <input type="text" id="recipient-address" placeholder="0x...">
+                        </div>
+                        <div class="setup-input">
+                            <label>Amount (ARC)</label>
+                            <input type="number" id="transaction-amount" value="50" min="0.01" step="0.01">
+                        </div>
+                        <div class="setup-input">
+                            <label>Network Fee (gwei)</label>
+                            <select id="gas-price">
+                                <option value="20">Standard (20 gwei)</option>
+                                <option value="50" selected>Fast (50 gwei)</option>
+                                <option value="100">Ultra-Fast (100 gwei)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="cta-button open-position-btn" onclick="initializeTransaction()">
+                        <i class="fas fa-paper-plane"></i> Create Transaction
+                    </button>
+                </div>
+
+                <!-- Transaction Processing -->
+                <div id="transaction-phase" class="trading-phase hidden">
+                    <div class="trading-header">
+                        <div class="price-info">
+                            <div class="info-item">
+                                <span class="label">Transaction Hash</span>
+                                <span id="tx-hash" class="value">0x...</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Status</span>
+                                <span id="tx-status" class="value">Processing</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Amount</span>
+                                <span id="display-amount" class="value">50 ARC</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Verification Progress -->
+                    <div class="chart-container">
+                        <div id="verification-stages">
+                            <div class="verification-stage">
+                                <div class="stage-indicator" id="stage-1"></div>
+                                <span>Signature Generation</span>
+                            </div>
+                            <div class="verification-stage">
+                                <div class="stage-indicator" id="stage-2"></div>
+                                <span>Mempool Broadcast</span>
+                            </div>
+                            <div class="verification-stage">
+                                <div class="stage-indicator" id="stage-3"></div>
+                                <span>Validator Verification</span>
+                            </div>
+                            <div class="verification-stage">
+                                <div class="stage-indicator" id="stage-4"></div>
+                                <span>Settlement Complete</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Stats -->
+                    <div class="position-stats">
+                        <div class="stat-row">
+                            <span class="stat-label">Gas Used:</span>
+                            <span id="gas-used" class="stat-value">0 units</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Transaction Fee:</span>
+                            <span id="tx-fee" class="stat-value">\$0.00</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Confirmation Time:</span>
+                            <span id="confirm-time" class="stat-value">0s</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Block Number:</span>
+                            <span id="block-number" class="stat-value">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Cryptographic Info -->
+                    <div id="crypto-container" class="pnl-container">
+                        <div class="pnl-box">
+                            <span class="pnl-label">Cryptographic Security</span>
+                            <span id="crypto-strength" class="pnl-value">256-bit</span>
+                            <span id="crypto-type" class="pnl-percent">ECDSA Signature</span>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="trading-controls">
+                        <button class="control-btn" onclick="closeArcSimulator()">
+                            <i class="fas fa-times"></i> Close Simulator
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="lesson-completed-notification" class="notification hidden">
+        <span id="completed-message">Lesson X Completed!</span>
+    </div>
+
+    <footer id="footer">
+        <p>Arc Academy | Learn Web3's Economic Infrastructure | Visit <a href="https://arc.network" target="_blank" rel="noopener">arc.network</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
